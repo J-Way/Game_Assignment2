@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public double turnTime;
-    public Text timerText;
+    public Text timerText, winText;
+
+    public bool switchToMenu;
 
     GameObject playerController;
 
@@ -17,6 +19,7 @@ public class Timer : MonoBehaviour
         turnTime = 10.0f;
         timerText = GameObject.Find("Timer").GetComponent<Text>();
         playerController = GameObject.Find("PlayerController");
+        switchToMenu = false;
     }
 
     // Update is called once per frame

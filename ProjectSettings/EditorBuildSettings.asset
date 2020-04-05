@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/MainMenu.unity
+    guid: d5ea395036c4d4342b1e9b99f4d3f640
+  - enabled: 1
+    path: Assets/Scenes/Tanks.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

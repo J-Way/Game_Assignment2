@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHandler : MonoBehaviour
 {
-    public GameObject tank01, tankBarrel01,
-        tank02, tankBarrel02;
+    public GameObject tank01, tankBarrel01, tankShellPoint01,
+        tank02, tankBarrel02, tankShellPoint02;
     public float moveSpeed;
 
     public GameObject tankShell;
@@ -18,9 +19,12 @@ public class PlayerHandler : MonoBehaviour
     {
         tank01 = GameObject.Find("Tank01");
         tankBarrel01 = GameObject.Find("BarrelPivot01");
+        tankShellPoint01 = GameObject.Find("ShellPoint01");
 
         tank02 = GameObject.Find("Tank02");
         tankBarrel02 = GameObject.Find("BarrelPivot02");
+        tankShellPoint02 = GameObject.Find("ShellPoint02");
+
         moveSpeed = 5.0f;
 
         currentPlayer = true;
@@ -32,20 +36,29 @@ public class PlayerHandler : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        HandleShooting();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            HandleShooting();
     }
 
     void HandleShooting()
     {
-        // should probably have a grace period for shots to land
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject.Instantiate(tankShell);
+        float vol = Random.Range(5, 10);
+        GameObject activeShell;
 
-            turnTimer.GetComponent<Timer>().turnTime = -1;
-        }
+        if (currentPlayer)
+            activeShell = Instantiate(tankShell, tankShellPoint01.transform.position, tankBarrel01.transform.rotation);
+        else
+            activeShell = Instantiate(tankShell, tankShellPoint02.transform.position, tankBarrel02.transform.rotation);
+
+        Rigidbody shellRB = activeShell.GetComponent<Rigidbody>();
+
+        shellRB.AddRelativeForce(new Vector3(0, 500, 0));
+
+        // should probably have a grace period for shots to land
+        turnTimer.GetComponent<Timer>().turnTime = -1;
     }
-    
+
     void HandleMovement()
     {
         direction = new Vector3(0, 0, 0);
